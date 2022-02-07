@@ -51,7 +51,7 @@ func stackTrace() (fields logrus.Fields) {
 		if isCaller {
 			file = frame.File
 			line = frame.Line
-			function = frame.Function
+			function = cleanFuncName(frame.Function)
 			isCaller = false
 			continue
 		}
@@ -64,7 +64,7 @@ func stackTrace() (fields logrus.Fields) {
 		trace = append(trace, map[string]interface{}{
 			"file":     frame.File,
 			"line":     frame.Line,
-			"function": frame.Function,
+			"function": cleanFuncName(frame.Function),
 		})
 
 		if len(trace) == options.StackTrace.GetMaxEntries() {
@@ -110,6 +110,11 @@ func isLoggerCall(file string) bool {
 
 	fs := strings.Split(file, "/")
 	l := fs[len(fs)-2]
-	return l == "logger"
+	return strings.HasPrefix(l, "logger")
 
+}
+
+func cleanFuncName(name string) string {
+	ns := strings.Split(name, "/")
+	return ns[len(ns)-1]
 }
