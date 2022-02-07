@@ -113,22 +113,3 @@ func isLoggerCall(file string) bool {
 	return l == "logger"
 
 }
-
-func test() {
-
-	options := logger.NewOptions()
-	options.SetFile("filename.log")
-	options.SetIncludeFunc(true)
-	options.SetLevel("info")
-
-	st := logger.NewStackTrace()
-	st.SetMaxEntries(5)
-	st.SetStopFile("main.go")
-	st.SetStopFunction("main.main")
-	st.SetLambda(true)
-
-	options.SetStackTrace(*st)
-
-	logger.InitWithOptions(options)
-
-}

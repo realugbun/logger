@@ -95,8 +95,3 @@ func Test_stackTrace(t *testing.T) {
 		})
 	}
 }
-
-func Test_test(t *testing.T) {
-	Init()
-	Info("example log")
-}
